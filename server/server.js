@@ -1,11 +1,11 @@
 import * as puppeteer from "puppeteer";
-import axios from "axios";
-import fs from "fs/promises";
+import gettingTheData from "./gettingTheData.js";
 
 (async () => {
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
-  const category = [
+
+  const categories = [
     "case",
     "cooling-systems/air-cooling",
     "cooling-systems/fans",
@@ -21,57 +21,38 @@ import fs from "fs/promises";
   ];
 
   // Navigate to the URL
-  for (let x of category) {
+  for (let category of categories) {
     await page.goto(
-      `https://www.hankerz.com.eg/product-category/pc-hardware-components/${x}/?count=36&paged=`
+      `https://www.hankerz.com.eg/product-category/pc-hardware-components/${category}/?count=36&paged=`
     );
 
     // Wait for the page to load and ensure all relevant elements are available
-    try {
+
+    await page.waitForSelector(".product-inner");
+
+    // Extract information
+    const devElements = await page.$$(".product-inner");
+
+    // Process the elements as needed
+    let index = 0;
+    for (let productPage of devElements) {
       await page.waitForSelector(".product-inner");
 
-      // Extract information
-      const devElements = await page.$$(".product-inner");
-
-      // Process the elements as needed
-      let index = 0;
-      for (const devElement of devElements) {
-        // Use devElement as the context to search for elements with the class "name"
-        const nameElement = await devElement.$(
+      try {
+        const productNameEle = await productPage.$(
           ".woocommerce-loop-product__title"
         );
-        const imgSrc = await devElement.$("img");
-        const price = await devElement.$(".price");
-        if (nameElement && imgSrc && price) {
-          const nameText = await nameElement.evaluate((ele) => ele.textContent);
-          const imgSrcText = await imgSrc.evaluate((ele) =>
-            ele.getAttribute("data-oi")
-          );
-          const priceText = await price.evaluate((ele) => ele.textContent);
-          // downloading the images.
-          const response = await axios.get(imgSrcText, {
-            responseType: "arraybuffer",
-          });
-          await fs.writeFile(
-            "images/" + nameText + ".jpg",
-            response.data,
-            "binary"
-          );
+      } catch {}
+      index++;
+      //get product name to redirect the page to the product page.
+      // await gettingTheData(page, productNameEle);
+      await page.goto(
+        `https://www.hankerz.com.eg/product-category/pc-hardware-components/${category}/`
+      );
+      await page.waitForSelector(".woocommerce-loop-product__title");
+      console.log("up", index);
 
-          //view data in the console.
-          console.log(`#####################  ${x}  #########################`);
-          console.log("Name:", nameText);
-          console.log("ImgSrc:", imgSrcText);
-          console.log("price:", priceText);
-          index++;
-          console.log("number:", index);
-        }
-
-        // Extract the text content of the element with class "name"
-      }
-    } catch (e) {
-      console.log("###################   [No data]    #######################");
-      console.log(e);
+      // Wait for the page to load and ensure all relevant elements are available
     }
   }
 
