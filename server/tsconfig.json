@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    // "module": "es6",
+    "target": "ES6",
+    "module": "commonjs",
+    "outDir": "./dist",
+    // "rootDir": ".",
+    // "lib": ["ES5"],
+    "esModuleInterop": true,
+    "strict": true
+  },
+  // "type":"mudol"
+  "include": ["*.ts"],
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  }
+}
