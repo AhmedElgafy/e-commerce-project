@@ -24,9 +24,9 @@ export async function runner() {
   // Navigate to the URL
   for (let category of categories) {
     await page1.goto(
-      // `https://www.hankerz.com.eg/product-category/pc-hardware-components/${category}/?count=36&paged=`
+      `https://www.hankerz.com.eg/product-category/pc-hardware-components/${category}/?count=36&paged=`
       // "https://www.hankerz.com.eg/product-category/pc-hardware-components/ram/"
-      "https://www.hankerz.com.eg/product-category/asus-motherboards/"
+      // "https://www.hankerz.com.eg/product-category/asus-motherboards/"
     );
     // Wait for the page to load and ensure all relevant elements are available
     await page1.waitForSelector(".product-inner");
@@ -36,6 +36,7 @@ export async function runner() {
 
     for (let wontedDiv of wontedDivs) {
       //go back to the main page and waiting for page to load.
+      console.log(`###############  ${category}    #################`);
 
       const getLinkEle = await wontedDiv.$(".product-loop-title");
       if (getLinkEle) {
@@ -43,8 +44,8 @@ export async function runner() {
           ele.getAttribute("href")
         );
         try {
-        } catch {
           await gettingTheData(page2, linkToGo);
+        } catch {
           console.log("no Data");
         }
         console.log(linkToGo);

@@ -4,20 +4,35 @@ interface shortDescriptionType {
   name: string | null;
   about: string | null;
 }
-
+interface ProductSchema {
+  name: string | null;
+  price: string | null;
+  images: Map<string, number> | null;
+  categories: (string | null)[] | undefined;
+  link: string | null;
+  disc: shortDescriptionType[] | null;
+}
 export async function gettingTheData(
   page2: puppeteer.Page,
   linkToGo: string | null
 ) {
   await page2.goto(`${linkToGo}`);
   await page2.waitForSelector(".row");
-  // await page2.waitForNavigation({ waitUntil: "domcontentloaded" });
+  const product: ProductSchema = {
+    name: null,
+    categories: undefined,
+    images: null,
+    link: null,
+    price: null,
+    disc: null,
+  };
   const nameEle = await page2.$(".product_title");
   if (nameEle) {
     const nameText = await nameEle.evaluate((ele: any) => {
       return ele.textContent.trim();
     });
-    console.log("product Name:", nameText);
+    product.name = nameText;
+    // console.log("product Name:", nameText);
   }
   const imagesPlace = await page2.$(".product-image-slider");
   if (imagesPlace) {
@@ -29,6 +44,7 @@ export async function gettingTheData(
       const imageSrc = await imgEle.evaluate((ele) => ele.getAttribute("href"));
       mapping.set(imageSrc, number++ - mapping.size);
     }
+    product.images = mapping;
     // console.log("product images:", mapping);
   }
   const productPriceEle = await page2.$(".price");
@@ -36,12 +52,10 @@ export async function gettingTheData(
     const productPriceText = await productPriceEle.evaluate((ele: any) =>
       ele.textContent.trim()
     );
-    console.log("product Price:", productPriceText);
+    product.price = productPriceText;
+    // console.log("product Price:", productPriceText);
   }
   //"woocommerce-product-details__short-description"
-  const shortDescEle = await page2.$(
-    ".description , .woocommerce-product-details__short-description"
-  );
   const shortDescription: shortDescriptionType[] = await page2.$$eval(
     ".description.woocommerce-product-details__short-description li",
     (lis) => {
@@ -56,6 +70,15 @@ export async function gettingTheData(
       });
     }
   );
-  console.table(shortDescription);
+
+  console.log(shortDescription);
+  //selecting categories.
+  const categories = await page2.$(".posted_in");
+  const categoriesLinkEle = await categories?.$$eval("a", (aEle) =>
+    aEle.map((cat) => cat.textContent)
+  );
+  product.categories = categoriesLinkEle;
+  console.log(product);
+  // console.log("categories: ", categoriesLinkEle);
 }
 runner();
