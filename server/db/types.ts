@@ -7,7 +7,7 @@ export interface shortDescriptionType {
 export interface ProductType {
   name: string | null;
   price: string | null;
-  images: { contentType: string; data: Buffer; link: string }[] | null;
+  images: { contentType: string; data: Buffer; link: string }[];
   categories: (string | null)[] | undefined;
   link: string | null;
   shortDisc: shortDescriptionType[] | null;
