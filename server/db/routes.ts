@@ -1,6 +1,7 @@
 import ProductModel from "./types";
 import { Request, Response } from "express";
 import { db } from "./connectingTomo";
+import fs from "fs";
 db;
 
 export const getAllProducts = async (req: Request, res: Response) => {
@@ -15,23 +16,47 @@ export const getAllProducts = async (req: Request, res: Response) => {
 
 export const getProductById = async (req: Request, res: Response) => {
   try {
-    const data = await ProductModel.find({ _id: req.params.id });
-    res.send(data[0].images[0].link);
+    const data = await ProductModel.find({ _id: req.params.id }).select(
+      "-images"
+    );
+    res.type("json");
+    res.send(data);
   } catch {
     res.send("sorry don't have this Id");
   }
   console.log("finished");
 };
-
+export const getProductByTag = async (req: Request, res: Response) => {
+  try {
+    const data = await ProductModel.find({})
+      .where("categories")
+      .in([req.params.tag])
+      .select("-images");
+    res.type("json");
+    res.send(data);
+  } catch {
+    res.send("sorry don't have this Id");
+  }
+  console.log("finished");
+};
 export const getAllImage = async (req: Request, res: Response) => {
   try {
-    const data = await ProductModel.find({}, "images").limit(1);
-    res.send(data[0].images[0].data);
+    const fromDataBase = await ProductModel.find({ _id: req.params.id }).select(
+      "images"
+    );
+    const size = fromDataBase[0].images.length;
+    const imageIndex = Number(req.params.imageNumber) % size;
+    res.set({
+      "Content-Type": fromDataBase[0].images[imageIndex].contentType,
+    });
+
+    res.send(fromDataBase[0].images[imageIndex].data);
   } catch (err) {
     console.log(err);
     res.send("sorry don't have these images");
   }
 };
+
 export const notFound = async (req: Request, res: Response) => {
   res.status(404).send("sorry not Found");
 };

@@ -1,4 +1,4 @@
-export async function getData() {
+export async function getAllProduct() {
   const res = await fetch("http://localhost:8000/");
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
@@ -10,8 +10,9 @@ export async function getData() {
 
   return res.json();
 }
-export async function getImage() {
-  const res = await fetch("http://localhost:8000/image");
+
+export async function getProductById(id: string) {
+  const res = await fetch("http://localhost:8000/product/" + id);
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
 
@@ -19,6 +20,6 @@ export async function getImage() {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
   }
-  let data = await res.json();
-  return data;
+
+  return res.json();
 }
