@@ -20,7 +20,7 @@ export const getProductById = async (req: Request, res: Response) => {
       "-images"
     );
     res.type("json");
-    res.send(data);
+    res.send(data[0]);
   } catch {
     res.send("sorry don't have this Id");
   }
