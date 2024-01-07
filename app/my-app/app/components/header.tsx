@@ -8,7 +8,7 @@ const Header = () => {
         <div className="flex items-center flex-none w-[60px] ">
           <img src="../../Logo.png" className="block " alt="logo Image" />
         </div>
-
+        {/* <h1 className="my-auto text-lg font-bold">Abo mohamed LL computer</h1> */}
         {/* search bar */}
         <div className="  p-2 grow w-[50%] md:grow-0 flex items-center mx-auto relative">
           <input
@@ -21,7 +21,6 @@ const Header = () => {
             className="absolute w-5 right-[25px]"
           />
         </div>
-
         {/* profile, favorite, card and contacts. */}
         <div className=" flex-none hidden md:flex mx-auto md:mx-1 align-middle justify-center col-span-5 md:col-span-1 gap-2">
           <img className="w-5" src="../../contact.svg" alt="" />

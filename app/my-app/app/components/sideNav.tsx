@@ -12,7 +12,7 @@ const SideNav = () => {
   ];
   return (
     <>
-      <div className="border-2 h-[90vh] col-span-2 hidden md:block">
+      <div className="border-2 h-screen w-[20%] hidden md:block">
         <ul className="px-2 py-2 ">
           {catagories.map((ele) => {
             return (

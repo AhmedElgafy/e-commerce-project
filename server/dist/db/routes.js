@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.notFound = exports.getAllImage = exports.getProductById = exports.getAllProducts = void 0;
+exports.notFound = exports.getAllImage = exports.getProductByTag = exports.getProductById = exports.getAllProducts = void 0;
 const types_1 = __importDefault(require("./types"));
 const connectingTomo_1 = require("./connectingTomo");
 connectingTomo_1.db;
@@ -30,8 +30,8 @@ exports.getAllProducts = getAllProducts;
 const getProductById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = yield types_1.default.find({ _id: req.params.id }).select("-images");
-        res.set({});
-        res.send(data);
+        res.type("json");
+        res.send(data[0]);
     }
     catch (_b) {
         res.send("sorry don't have this Id");
@@ -39,11 +39,30 @@ const getProductById = (req, res) => __awaiter(void 0, void 0, void 0, function*
     console.log("finished");
 });
 exports.getProductById = getProductById;
+const getProductByTag = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const data = yield types_1.default.find({})
+            .where("categories")
+            .in([req.params.tag])
+            .select("-images");
+        res.type("json");
+        res.send(data);
+    }
+    catch (_c) {
+        res.send("sorry don't have this Id");
+    }
+    console.log("finished");
+});
+exports.getProductByTag = getProductByTag;
 const getAllImage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const fromDataBase = yield types_1.default.find({}).select("images").limit(1);
-        res.set({ "Content-Type": fromDataBase[0].images[0].contentType });
-        res.send(fromDataBase[0].images[0].data);
+        const fromDataBase = yield types_1.default.find({ _id: req.params.id }).select("images");
+        const size = fromDataBase[0].images.length;
+        const imageIndex = Number(req.params.imageNumber) % size;
+        res.set({
+            "Content-Type": fromDataBase[0].images[imageIndex].contentType,
+        });
+        res.send(fromDataBase[0].images[imageIndex].data);
     }
     catch (err) {
         console.log(err);

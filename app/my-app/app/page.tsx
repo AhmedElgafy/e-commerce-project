@@ -1,24 +1,22 @@
-import Image from "next/image";
-import { Metadata } from "next";
-import { getAllProduct, getProductById } from "./api/getAllProduct";
-import { ProductType } from "./typs/types";
+import { getAllProduct } from "./api/getAllProduct";
+import Body from "./components/body";
 import Header from "./components/header";
 import SideNav from "./components/sideNav";
-import Body from "./components/body";
+import { ProductType } from "./typs/types";
 
-export const metadata: Metadata = {
-  title: "Next.js",
-};
+// import Home from "./(Home)/home/page";
 
-export default async function Home() {
-  const product: ProductType = await getProductById("657c60b02b70417531a8b6c3");
+export default async function Page() {
   const allProducts: ProductType[] = await getAllProduct();
+
   // console.log(product);
   return (
     <>
       <Header />
-      <SideNav />
-      <Body allProducts={allProducts} />
+      <div className="flex">
+        <SideNav />
+        <Body allProducts={allProducts} />
+      </div>
     </>
   );
 }
