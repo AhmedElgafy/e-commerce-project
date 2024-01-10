@@ -7,15 +7,17 @@ import {
 } from "./db/routes";
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
 
+dotenv.config();
 const app = express();
-const PORT = 8000;
+
 app.use(cors());
 app.use(express.json());
 app.get("/", getAllProducts);
 app.get("/product/:id/images/:imageNumber", getAllImage);
 app.get("/product/:id", getProductById);
 app.get("/products/:tag", getProductByTag);
-
 app.use(notFound);
-app.listen(PORT);
+
+app.listen(process.env.PORT || 8000);
