@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ReduxProvider } from "./store/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={"bg-[#607274]  text-white"}>{children}</body>
+      <body className={"bg-[#607274]  text-white"}>
+        <ReduxProvider>{children}</ReduxProvider>
+      </body>
     </html>
   );
 }

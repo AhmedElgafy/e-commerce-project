@@ -39,7 +39,7 @@ export const getProductByTag = async (req: Request, res: Response) => {
   }
   console.log("finished");
 };
-export const getAllImage = async (req: Request, res: Response) => {
+export const getAllImage2 = async (req: Request, res: Response) => {
   try {
     const fromDataBase = await ProductModel.find({ _id: req.params.id }).select(
       "images"
@@ -51,6 +51,23 @@ export const getAllImage = async (req: Request, res: Response) => {
     });
 
     res.send(fromDataBase[0].images[imageIndex].data);
+  } catch (err) {
+    console.log(err);
+    res.send("sorry don't have these images");
+  }
+};
+export const getAllImage = async (req: Request, res: Response) => {
+  try {
+    const fromDataBase = await ProductModel.find({
+      _id: req.params.id,
+    }).select("images");
+    let images: string[] = [];
+    res.type("json");
+    for (let i of fromDataBase[0].images) {
+      images.push("data:image/jpg;base64," + i.data.toString("base64"));
+    }
+
+    res.send(JSON.stringify(images));
   } catch (err) {
     console.log(err);
     res.send("sorry don't have these images");

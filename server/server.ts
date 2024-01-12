@@ -1,5 +1,6 @@
 import {
   getAllImage,
+  getAllImage2,
   getAllProducts,
   getProductById,
   getProductByTag,
@@ -15,9 +16,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.get("/", getAllProducts);
-app.get("/product/:id/images/:imageNumber", getAllImage);
+app.get("/product/:id/images", getAllImage);
 app.get("/product/:id", getProductById);
 app.get("/products/:tag", getProductByTag);
+// app.get("/test", getAllImage2);
 app.use(notFound);
 
 app.listen(process.env.PORT || 8000);
