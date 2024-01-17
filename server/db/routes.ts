@@ -6,7 +6,7 @@ db;
 
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const data = await ProductModel.find({}).select("-images");
+    const data = await ProductModel.find({}).select("-images").limit(10);
     res.send(data);
   } catch {
     res.send("sorry it is no data");
@@ -51,6 +51,26 @@ export const getAllImage2 = async (req: Request, res: Response) => {
     });
 
     res.send(fromDataBase[0].images[imageIndex].data);
+  } catch (err) {
+    console.log(err);
+    res.send("sorry don't have these images");
+  }
+};
+export const getOneImage = async (req: Request, res: Response) => {
+  try {
+    const fromDataBase = await ProductModel.find({
+      _id: req.params.id,
+    }).select("images");
+    let images: string[] = [];
+    // res.type("png");
+    res.setHeader("content-type", "text/plain");
+    const index = Number(req.params.index);
+    const size = fromDataBase[0].images.length;
+    const imageSrc =
+      "data:image/jpg;base64," +
+      fromDataBase[0].images[index % size].data.toString("base64");
+
+    res.send(JSON.stringify(imageSrc));
   } catch (err) {
     console.log(err);
     res.send("sorry don't have these images");

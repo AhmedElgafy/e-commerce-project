@@ -1,7 +1,7 @@
 import {
   getAllImage,
-  getAllImage2,
   getAllProducts,
+  getOneImage,
   getProductById,
   getProductByTag,
   notFound,
@@ -17,6 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.get("/", getAllProducts);
 app.get("/product/:id/images", getAllImage);
+app.get("/product/:id/images/:index", getOneImage);
 app.get("/product/:id", getProductById);
 app.get("/products/:tag", getProductByTag);
 // app.get("/test", getAllImage2);

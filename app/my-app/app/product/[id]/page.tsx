@@ -1,9 +1,9 @@
 "use client";
-import { getProductById } from "@/app/api/getAllProduct";
+
+import { RootState } from "@/app/store";
 import { ProductType } from "@/app/typs/types";
-import { rejects } from "assert";
-import { Island_Moments, Port_Lligat_Sans } from "next/font/google";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Page({ params }: { params: { id: string } }) {
   const [product, setProduct] = useState<ProductType>();
@@ -15,13 +15,13 @@ export default function Page({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     console.log("hi");
-    fetch("http://192.168.100.20:8000/product/" + params.id)
+    fetch("http://localhost:8000/product/" + params.id)
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);
       })
       .catch((rejects) => console.log(rejects));
-    fetch("http://192.168.100.20:8000/product/" + params.id + "/images")
+    fetch("http://localhost:8000/product/" + params.id + "/images")
       .then((res) => res.json())
       .then((data) => setImages(data))
       .catch((rejects) => console.log(rejects));
@@ -40,8 +40,8 @@ export default function Page({ params }: { params: { id: string } }) {
             <img src={image || images[0]} alt={product.name || ""} />
             <ul className="flex pt-2 gap-3 items-center justify-between">
               {/* {optionalImages()} */}
-              {images.map((ele) => (
-                <li className="w-[30%]">
+              {images.map((ele, index) => (
+                <li className="w-[30%]" key={index}>
                   <img src={ele} onClick={() => setImage(ele)} />
                 </li>
               ))}
@@ -58,6 +58,12 @@ export default function Page({ params }: { params: { id: string } }) {
                   </li>
                 );
               })}
+              <ul className="flex gap-2">
+                <span className="font-bold">Categories:</span>
+                {product.categories?.map((ele, index) => (
+                  <li key={index}>{ele}</li>
+                ))}
+              </ul>
               <p className="text-2xl font-bold">{product.price}</p>
             </ul>
           </div>

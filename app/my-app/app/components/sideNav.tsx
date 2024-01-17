@@ -7,10 +7,10 @@ import { setCategory } from "../store/reducers/category";
 
 const SideNav = () => {
   const catagories: { name: string; imageSrc: string }[] = [
-    { name: "Cooling System", imageSrc: "../../cooling-fan.svg" },
+    { name: "Cooling", imageSrc: "../../cooling-fan.svg" },
     { name: "GPU", imageSrc: "../../graphic-card.svg" },
     { name: "Case", imageSrc: "../../desktop.svg" },
-    { name: "HDD", imageSrc: "../../hdd.svg" },
+    { name: "Storage", imageSrc: "../../hdd.svg" },
     { name: "Motherboard", imageSrc: "../../motherboard.svg" },
     { name: "RAM", imageSrc: "../../ram-memory.svg" },
     { name: "CPU", imageSrc: "../../cpu.svg" },
@@ -20,15 +20,20 @@ const SideNav = () => {
   const count = useSelector((state: RootState) => state.counter.value);
   const category = useSelector((state: RootState) => state.category.value);
   const dispatch = useDispatch();
+  const handelCategoryClick = (catName: string) => {
+    dispatch(setCategory(catName));
+    console.log("ima working");
+  };
   return (
     <>
       <div className="border-2 h-screen w-[20%] hidden md:block">
         <ul className="px-2 py-2 ">
-          {catagories.map((ele) => {
+          {catagories.map((ele, index) => {
             return (
               <li
+                key={index}
                 className="flex gap-2 p-3 "
-                onClick={() => dispatch(setCategory(ele.name))}
+                onClick={() => handelCategoryClick(ele.name)}
               >
                 <img src={ele.imageSrc} className="w-8" alt={ele.name} />
                 <p className="my-auto">{ele.name}</p>
@@ -37,8 +42,8 @@ const SideNav = () => {
           })}
         </ul>
         <h1>{count}</h1>
-        {/* <button onClick={() => dispatch(increment())}>+</button>
-        <button onClick={() => dispatch(decrement())}>-</button> */}
+        <button onClick={() => handelCategoryClick}>+</button>
+        <button onClick={() => dispatch(decrement())}>-</button>
         <h1>cur Category: {category}</h1>
       </div>
     </>

@@ -17,7 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={"bg-[#607274]  text-white"}>
+      <body
+        className={"bg-[#607274]  text-white"}
+        suppressHydrationWarning={true}
+      >
         <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>

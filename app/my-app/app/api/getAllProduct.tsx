@@ -26,3 +26,14 @@ export async function getProductImagesById(id: string) {
 
   return res.json();
 }
+export async function getProductOneImageById(id: string, index: string) {
+  const res = await fetch(
+    "http://localhost:8000/product/" + id + "/images/" + index
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
