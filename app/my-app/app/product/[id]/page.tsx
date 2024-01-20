@@ -15,13 +15,13 @@ export default function Page({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     console.log("hi");
-    fetch("http://localhost:8000/product/" + params.id)
+    fetch("http://192.168.100.20:8000/product/" + params.id)
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);
       })
       .catch((rejects) => console.log(rejects));
-    fetch("http://localhost:8000/product/" + params.id + "/images")
+    fetch("http://192.168.100.20:8000/product/" + params.id + "/images")
       .then((res) => res.json())
       .then((data) => setImages(data))
       .catch((rejects) => console.log(rejects));
@@ -35,13 +35,16 @@ export default function Page({ params }: { params: { id: string } }) {
   if (product)
     return (
       <>
-        <div className="flex flex-wrap p-10 items-start justify-center ">
+        <div className="flex flex-wrap p-10 items-start justify-center">
           <div className="w-[100%] md:w-80">
-            <img src={image || images[0]} alt={product.name || ""} />
+            <img src={image || images[1]} alt={product.name || ""} />
             <ul className="flex pt-2 gap-3 items-center justify-between">
               {/* {optionalImages()} */}
               {images.map((ele, index) => (
-                <li className="w-[30%]" key={index}>
+                <li
+                  className="w-[30%] cursor-pointer hover:opacity-[50%]"
+                  key={index}
+                >
                   <img src={ele} onClick={() => setImage(ele)} />
                 </li>
               ))}

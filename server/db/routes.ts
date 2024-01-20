@@ -6,7 +6,7 @@ db;
 
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const data = await ProductModel.find({}).select("-images").limit(10);
+    const data = await ProductModel.find({}).select("-images");
     res.send(data);
   } catch {
     res.send("sorry it is no data");

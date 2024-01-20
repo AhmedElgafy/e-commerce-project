@@ -10,6 +10,9 @@ interface PropsTyp {
 
 const Body: React.FC<PropsTyp> = ({ allProducts }) => {
   const category = useSelector((state: RootState) => state.category.value);
+  const search = useSelector((state: RootState) => state.search.value);
+
+  // console.log(allProducts);
   return (
     <>
       <div
@@ -17,25 +20,41 @@ const Body: React.FC<PropsTyp> = ({ allProducts }) => {
          items-start md:w-[80%] flex flex-wrap gap-3
         col-span-8 md:col-span-5 "
       >
-        {category
-          ? allProducts
-              .filter((ele) =>
-                ele.categories?.find((ele) => {
-                  console.log("ele: " + ele);
-                  console.log("category: " + category);
-                  return ele?.toLowerCase().includes(category.toLowerCase());
-                })
+        {category &&
+          allProducts
+            .filter((ele) =>
+              ele.categories?.find(
+                (ele) =>
+                  ele?.toLowerCase().includes(category.toLowerCase()) && ele
               )
-              .map((ele, index) => (
-                <Suspense key={index} fallback={<p>Loading feed...</p>}>
-                  <Card product={ele} />
-                </Suspense>
-              ))
-          : allProducts.slice(0, 20).map((ele, index) => (
+            )
+            .filter((ele) =>
+              search
+                ? ele.name?.toLowerCase().includes(search.toLowerCase())
+                : ele
+            )
+            .map((ele, index) => (
               <Suspense key={index} fallback={<p>Loading feed...</p>}>
                 <Card product={ele} />
               </Suspense>
             ))}
+        {search &&
+          !category &&
+          allProducts.map(
+            (ele, index) =>
+              ele.name?.toLowerCase()?.includes(search.toLowerCase()) && (
+                <Suspense key={index} fallback={<p>Loading feed...</p>}>
+                  <Card product={ele} />
+                </Suspense>
+              )
+          )}
+        {!category &&
+          !search &&
+          allProducts.slice(0, 15).map((ele, index) => (
+            <Suspense key={index} fallback={<p>Loading feed...</p>}>
+              <Card product={ele} />
+            </Suspense>
+          ))}
       </div>
     </>
   );
