@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ReduxProvider } from "./store/provider";
 import Header from "./components/header";
+import Cart from "./components/cart";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +20,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={"bg-[#607274]  text-white"}
+        className={"bg-[#001b4a] relative pb-[5rem] text-white"}
         suppressHydrationWarning={true}
       >
         <ReduxProvider>
           <Header />
 
           {children}
+          <Cart />
         </ReduxProvider>
       </body>
     </html>

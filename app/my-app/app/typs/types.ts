@@ -5,6 +5,7 @@ export interface shortDescriptionType {
   about: string | null;
 }
 export interface ProductType {
+  [key: string]: any;
   _id: string;
   name: string | null;
   price: string | null;

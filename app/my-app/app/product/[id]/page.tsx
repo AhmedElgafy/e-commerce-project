@@ -15,13 +15,13 @@ export default function Page({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     console.log("hi");
-    fetch("http://192.168.100.20:8000/product/" + params.id)
+    fetch(process.env.NEXT_PUBLIC_SERVER + "/product/" + params.id)
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);
       })
       .catch((rejects) => console.log(rejects));
-    fetch("http://192.168.100.20:8000/product/" + params.id + "/images")
+    fetch(process.env.NEXT_PUBLIC_SERVER + "/product/" + params.id + "/images")
       .then((res) => res.json())
       .then((data) => setImages(data))
       .catch((rejects) => console.log(rejects));

@@ -9,6 +9,7 @@ import Link from "next/link";
 const Header = () => {
   const search = useSelector((state: RootState) => state.search.value);
   const toggleMeno = useSelector((state: RootState) => state.toggleMeno.value);
+  const cart = useSelector((state: RootState) => state.shoppingCart.value);
   const dispatch = useDispatch();
   const handelSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearch(e.target.value));
@@ -18,10 +19,10 @@ const Header = () => {
   };
   return (
     <>
-      <div className=" sticky shadow-lg col-span-7 flex  flex-wrap px-5 ">
+      <div className=" bg-[#034579] shadow-lg col-span-7 flex relative flex-wrap px-5 ">
         {/* Logo */}
         <div className="flex items-center hover:filter hover:invert flex-none w-[60px] ">
-          <Link href={"http://192.168.100.20:3000/"}>
+          <Link href={process.env.NEXT_PUBLIC_HOST || ""}>
             <img src="../../Logo.png" className="block " alt="logo Image" />
           </Link>
         </div>
@@ -43,11 +44,15 @@ const Header = () => {
         </div>
         {/* profile, favorite, card and contacts. */}
         <div
-          className=" flex-none hidden md:flex mx-auto md:mx-1 
-        align-middle justify-center col-span-5 md:col-span-1 gap-2"
+          className=" left-0 shadow-2xl flex gap-5 rounded-t-2xl
+           bg-[#034579] md:w-[30%] w-[100%] h-[10%]
+            fixed md:static bottom-0 md:flex mx-auto md:mx-1 
+        md:my-auto justify-center col-span-5 md:col-span-1 md:gap-2"
         >
-          <img className="w-5" src="../../contact.svg" alt="" />
-          <p className="text-center my-auto"> (202) 555-0178</p>
+          <div className="flex gap-2">
+            <img className="w-5" src="../../contact.svg" alt="" />
+            <p className="text-center my-auto"> (202) 555-0178</p>
+          </div>
           <div className="flex gap-1 relative">
             <img
               className="w-5 hover:filter hover:invert cursor-pointer"
@@ -61,10 +66,12 @@ const Header = () => {
                 alt="card"
               />
               <div
-                className="absolute top-[5%] text-[10px] left-[50%]
-               bg-red-500 rounded-full w-4 flex align-middle justify-center"
+                className={`${
+                  !cart.length && "hidden"
+                } absolute top-[5%] text-[10px] left-[50%]
+               bg-red-500 rounded-full w-4 flex align-middle justify-center`}
               >
-                1
+                {cart.length}
               </div>
             </div>
             <div className="relative flex items-center">

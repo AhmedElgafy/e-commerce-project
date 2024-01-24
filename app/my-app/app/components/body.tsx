@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useState } from "react";
+import React, { Suspense, memo } from "react";
 import { ProductType } from "../typs/types";
 import Card from "./Card";
 import { useSelector } from "react-redux";
@@ -11,13 +11,11 @@ interface PropsTyp {
 const Body: React.FC<PropsTyp> = ({ allProducts }) => {
   const category = useSelector((state: RootState) => state.category.value);
   const search = useSelector((state: RootState) => state.search.value);
-
-  // console.log(allProducts);
   return (
     <>
       <div
         className="border-2 p-3 w-[100%] justify-center
-         items-start md:w-[80%] flex flex-wrap gap-3
+        items-start md:w-[80%] flex flex-wrap gap-3
         col-span-8 md:col-span-5 "
       >
         {category &&
@@ -60,4 +58,4 @@ const Body: React.FC<PropsTyp> = ({ allProducts }) => {
   );
 };
 
-export default Body;
+export default memo(Body);

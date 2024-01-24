@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.scrollable-div {
+}
+.scrollable-div::-webkit-scrollbar {
+  /* position: absolute;
+  left: 0; */
+  width: 5px; /* Set the width of the scrollbar */
+  background-color: #f5f5f5; /* Set the background color of the scrollbar */
+  position: absolute;
+  left: 0;
+}

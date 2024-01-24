@@ -1,0 +1,6 @@
+
+###################   Tasks  ################################
+           --------------------------
+- use useCallback hook in this project                 [___]
+- make the header more dynamic with different routs    [___]
+
