@@ -49,7 +49,7 @@ const ProductCard = async ({ product }: ProductCardProps) => {
           <img
             src={image}
             loading="lazy"
-            className="w-full cursor-pointer hover:opacity-30"
+            className="w-full cursor-pointer hover:opacity-30 hover:scale-125 transition-all"
           />
         </Link>
         <div className="p-4 cursor-pointer">

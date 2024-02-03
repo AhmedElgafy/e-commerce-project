@@ -6,6 +6,7 @@ import categorySlice from "./category";
 import searchSlice from "./search";
 import togglemeno from "./togglemeno";
 import shoppingCart from "./shoppingCart";
+import showCart from "./showCart";
 
 const rootReducer = combineReducers({
   counter: counterReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   search: searchSlice,
   toggleMeno: togglemeno,
   shoppingCart: shoppingCart,
+  showCart: showCart,
   // Add other reducers as needed
 });
 

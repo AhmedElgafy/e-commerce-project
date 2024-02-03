@@ -40,7 +40,7 @@ const SideNav = () => {
   return (
     <>
       <div
-        className={`border-2 md:h-screen  w-[100%] items-center ${
+        className={`border-2 md:h-screen transition-all w-[100%] items-center ${
           !toggleMeno && "hidden"
         }   md:w-[20%] md:block`}
       >
@@ -49,14 +49,19 @@ const SideNav = () => {
             return (
               <li
                 key={index}
-                className="flex gap-2 p-3 w-[45%] cursor-pointer
+                className="flex transition-all  hover:translate-x-4 gap-2
+                 p-3 w-[45%] cursor-pointer
                  hover:filter hover:invert
                   hover:text-black "
                 onClick={(e) => {
                   handelCategoryClick(ele.name);
                 }}
               >
-                <img src={ele.imageSrc} className="w-8 " alt={ele.name} />
+                <img
+                  src={ele.imageSrc}
+                  className="w-8 bg-white rounded-md"
+                  alt={ele.name}
+                />
                 <p className="my-auto">{ele.name}</p>
               </li>
             );

@@ -7,6 +7,7 @@ import {
   removeFromCartById,
 } from "../store/reducers/shoppingCart";
 import { getProductOneImageById } from "../api/getAllProduct";
+import { setShowCart } from "../store/reducers/showCart";
 interface CartItemsProps {
   productCart: CartProduct;
 }
@@ -50,19 +51,25 @@ function removeEGP(text: string) {
 }
 const Cart = () => {
   const cartItems = useSelector((state: RootState) => state.shoppingCart.value);
-  const [hidCart, setHidCart] = useState<boolean>(false);
+  // const [hidCart, setHidCart] = useState<boolean>(false);
+  const showCart = useSelector((state: RootState) => state.showCart.value);
+  const dispatch = useDispatch();
   let total = 0;
   return (
     <div
       className={`${
-        hidCart && "hidden"
-      } fixed flex gap-3 p-4 flex-col top-0 scrollable-div
-     overflow-scroll right-0 h-screen md:w-[20%] w-[50%] bg-green-800`}
+        !showCart && "opacity-0 right-[-100%]"
+      } transition-all ease-in-out duration-500 z-30 fixed flex gap-3 p-4 flex-col top-0 scrollable-div
+      overflow-scroll right-0 h-screen md:w-[20%] w-[50%] bg-green-800`}
     >
       <div className="flex justify-end">
         <img
           src="../../close.svg"
-          onClick={() => (hidCart ? setHidCart(false) : setHidCart(true))}
+          onClick={() =>
+            showCart
+              ? dispatch(setShowCart(false))
+              : dispatch(setShowCart(true))
+          }
           className="w-[15%] cursor-pointer"
           alt=""
         />
