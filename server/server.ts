@@ -23,4 +23,4 @@ app.get("/products/:tag", getProductByTag);
 // app.get("/test", getAllImage2);
 app.use(notFound);
 
-//app.listen(process.env.PORT || 8000);
+app.listen(process.env.PORT || 8000);
