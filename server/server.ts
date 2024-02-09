@@ -24,3 +24,4 @@ app.get("/products/:tag", getProductByTag);
 app.use(notFound);
 
 app.listen(process.env.PORT || 8000);
+export default app;
