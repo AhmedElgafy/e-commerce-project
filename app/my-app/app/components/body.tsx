@@ -4,6 +4,7 @@ import { ProductType } from "../typs/types";
 import Card from "./Card";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import Skeleton from "react-loading-skeleton";
 interface PropsTyp {
   allProducts: ProductType[];
 }
@@ -14,7 +15,7 @@ const Body: React.FC<PropsTyp> = ({ allProducts }) => {
   return (
     <>
       <div
-        className="border-2 p-3 w-[100%] justify-center
+        className=" p-3 w-[100%] justify-center
         items-start md:w-[80%] flex flex-wrap gap-3
         col-span-8 md:col-span-5 "
       >
@@ -32,7 +33,7 @@ const Body: React.FC<PropsTyp> = ({ allProducts }) => {
                 : ele
             )
             .map((ele, index) => (
-              <Suspense key={index} fallback={<p>Loading feed...</p>}>
+              <Suspense key={index} fallback={<Skeleton />}>
                 <Card product={ele} />
               </Suspense>
             ))}
@@ -41,7 +42,10 @@ const Body: React.FC<PropsTyp> = ({ allProducts }) => {
           allProducts.map(
             (ele, index) =>
               ele.name?.toLowerCase()?.includes(search.toLowerCase()) && (
-                <Suspense key={index} fallback={<p>Loading feed...</p>}>
+                <Suspense
+                  key={index}
+                  //  fallback={<Skeleton />}
+                >
                   <Card product={ele} />
                 </Suspense>
               )
@@ -49,7 +53,10 @@ const Body: React.FC<PropsTyp> = ({ allProducts }) => {
         {!category &&
           !search &&
           allProducts.slice(0, 15).map((ele, index) => (
-            <Suspense key={index} fallback={<p>Loading feed...</p>}>
+            <Suspense
+              key={index}
+              // fallback={<Skeleton width={150} height={150} />}
+            >
               <Card product={ele} />
             </Suspense>
           ))}

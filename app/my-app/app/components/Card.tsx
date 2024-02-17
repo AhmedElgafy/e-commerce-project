@@ -4,7 +4,9 @@ import Link from "next/link";
 import { getProductOneImageById } from "../api/getAllProduct";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
+import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton from "react-loading-skeleton";
+
 import {
   CartProduct,
   addToTheCart,
@@ -46,17 +48,29 @@ const ProductCard = async ({ product }: ProductCardProps) => {
         md:w-[20%] sm:w-[40%] rounded-md overflow-hidden"
       >
         <Link href={`/product/${product._id}`} scroll={false} passHref>
-          <img
-            src={image}
-            loading="lazy"
-            className="w-full cursor-pointer hover:opacity-30 hover:scale-125 transition-all"
-          />
+          {image ? (
+            <img
+              // src={image}
+              src={image}
+              loading="lazy"
+              className="w-full cursor-pointer hover:opacity-30 
+              hover:scale-125 transition-all"
+            />
+          ) : (
+            <Skeleton
+              // circle
+              width="100%"
+              height={200}
+              containerClassName="avatar-skeleton"
+            />
+          )}
         </Link>
         <div className="p-4 cursor-pointer">
           <Link href={`/product/${product._id}`} scroll={false} passHref>
             <h2
               className="text-xl truncate text-[#d4e7eb]
             cursor-pointer font-semibold mb-2"
+              title={product.name || ""}
             >
               {product.name}
             </h2>

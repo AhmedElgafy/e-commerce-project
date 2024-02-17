@@ -8,6 +8,7 @@ import {
 } from "../store/reducers/shoppingCart";
 import { getProductOneImageById } from "../api/getAllProduct";
 import { setShowCart } from "../store/reducers/showCart";
+import ProductCard from "./Card";
 interface CartItemsProps {
   productCart: CartProduct;
 }
@@ -20,7 +21,7 @@ const CartItem = ({ productCart }: CartItemsProps) => {
   }, [productCart]);
   return (
     <>
-      <div className="flex gap-2 justify-between">
+      <div className="flex gap-2 justify-between" key={productCart._id}>
         <div className="w-[30%] ">
           <img src={image} className="" alt="" />
         </div>

@@ -9,7 +9,7 @@ import { ProductType } from "./typs/types";
 export default async function Page() {
   try {
     const allProducts: ProductType[] = await getAllProduct();
-    console.log(process.env.HOST);
+
     return (
       <>
         <div className="flex flex-col md:flex-row ">
