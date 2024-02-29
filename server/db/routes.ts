@@ -52,8 +52,8 @@ export const getAllImage2 = async (req: Request, res: Response) => {
 
     res.send(fromDataBase[0].images[imageIndex].data);
   } catch (err) {
-    console.log(err);
     res.send("sorry don't have these images");
+    console.log(err);
   }
 };
 export const getOneImage = async (req: Request, res: Response) => {
@@ -72,8 +72,8 @@ export const getOneImage = async (req: Request, res: Response) => {
 
     res.send(JSON.stringify(imageSrc));
   } catch (err) {
-    console.log(err);
     res.send("sorry don't have these images");
+    console.log(err);
   }
 };
 export const getAllImage = async (req: Request, res: Response) => {
@@ -89,8 +89,8 @@ export const getAllImage = async (req: Request, res: Response) => {
 
     res.send(JSON.stringify(images));
   } catch (err) {
-    console.log(err);
     res.send("sorry don't have these images");
+    console.log(err);
   }
 };
 

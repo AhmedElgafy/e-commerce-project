@@ -41,11 +41,15 @@ const SideNav = () => {
   return (
     <>
       <div
-        className={`border-opacity-25 border-white border-x-2 border-b-2  overflow-hidden md:h-screen delay-100 w-[100%] items-center ${
-          !toggleMeno ? "  h-0" : "h-80"
-        }   md:w-[20%] transition-all `}
+        className={`border-opacity-25 border-white border-x-2 border-b-2
+       overflow-hidden md:h-screen delay-100 w-[100%] items-center ${
+         !toggleMeno ? "  h-0" : "h-80"
+       }   md:w-[20%] transition-all `}
       >
-        <ul className="px-2 py-2 flex flex-wrap justify-center md:flex-nowrap md:flex-col">
+        <ul
+          className="px-2 py-2 flex flex-wrap 
+        justify-center md:flex-nowrap md:flex-col"
+        >
           {catagories.map((ele, index) => {
             return (
               <Link
@@ -57,7 +61,8 @@ const SideNav = () => {
               >
                 <li
                   key={index}
-                  className="flex transition-all  hover:translate-x-4 gap-2
+                  className="flex transition-all 
+                   hover:translate-x-4 gap-2
                   p-3 w-[45%] cursor-pointer
                   hover:filter hover:invert
                    hover:text-black "
@@ -76,11 +81,6 @@ const SideNav = () => {
             );
           })}
         </ul>
-        {/* <h1>{count}</h1>
-        <button onClick={() => handelCategoryClick}>+</button>
-        <button onClick={() => dispatch(decrement())}>-</button> */}
-        {/* <h1>cur Category: {category}</h1>
-        <h1>cur search: {search}</h1> */}
       </div>
     </>
   );

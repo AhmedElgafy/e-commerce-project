@@ -20,7 +20,6 @@ app.get("/product/:id/images", getAllImage);
 app.get("/product/:id/images/:index", getOneImage);
 app.get("/product/:id", getProductById);
 app.get("/products/:tag", getProductByTag);
-// app.get("/test", getAllImage2);
 app.use(notFound);
 
 app.listen(process.env.PORT || 8000);

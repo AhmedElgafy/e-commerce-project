@@ -33,7 +33,10 @@ const Body: React.FC<PropsTyp> = ({ allProducts }) => {
                 : ele
             )
             .map((ele, index) => (
-              <Suspense key={index} fallback={<Skeleton />}>
+              <Suspense
+                key={index}
+                //  fallback={<Skeleton />}
+              >
                 <Card product={ele} />
               </Suspense>
             ))}

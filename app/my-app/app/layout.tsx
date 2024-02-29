@@ -4,6 +4,7 @@ import "./globals.css";
 import { ReduxProvider } from "./store/provider";
 import Header from "./components/header";
 import Cart from "./components/cart";
+import SideNav from "./components/sideNav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,7 @@ export default function RootLayout({
       >
         <ReduxProvider>
           <Header />
-
+          {/* <SideNav /> */}
           {children}
           <Cart />
         </ReduxProvider>
