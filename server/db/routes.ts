@@ -1,10 +1,14 @@
 import ProductModel from "./types";
 import { Request, Response } from "express";
 import { db } from "./connectingTomo";
-import fs from "fs";
-db;
+try {
+  db;
+} catch {
+  console.log("Database Error");
+}
 
 export const getAllProducts = async (req: Request, res: Response) => {
+  res.type("json");
   try {
     const data = await ProductModel.find({}).select("-images");
     res.send(data);

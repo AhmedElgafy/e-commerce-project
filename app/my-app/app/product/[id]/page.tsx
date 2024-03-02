@@ -3,6 +3,7 @@ import { ProductType } from "@/app/typs/types";
 import { useEffect, useState } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
+import { getProductById } from "@/app/api/getAllProduct";
 export default function Page({ params }: { params: { id: string } }) {
   const [product, setProduct] = useState<ProductType>();
   const [isLoading, setLoading] = useState(true);
@@ -12,6 +13,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     fetch(process.env.NEXT_PUBLIC_SERVER + "/product/" + params.id)
+      // getProductById(params.id)
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);

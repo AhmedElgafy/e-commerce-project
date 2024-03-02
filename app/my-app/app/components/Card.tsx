@@ -22,9 +22,9 @@ const ProductCard = async ({ product }: ProductCardProps) => {
   const [selected, setSelected] = useState<boolean>(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    getProductOneImageById(product._id, "1").then((data) => setImage(data));
-  }, [product]);
+  // useEffect(() => {
+  //   getProductOneImageById(product._id, "1").then((data) => setImage(data));
+  // }, [product]);
   const x: CartProduct = {
     count: 0,
     _id: product._id,
@@ -41,6 +41,13 @@ const ProductCard = async ({ product }: ProductCardProps) => {
     }
     console.log("clicked the card");
   };
+  // console.log(
+  //   process.env.NEXT_PUBLIC_SERVER +
+  //     "/product/" +
+  //     product._id +
+  //     "/images/" +
+  //     "1"
+  // );
   return (
     <>
       <div
@@ -48,22 +55,30 @@ const ProductCard = async ({ product }: ProductCardProps) => {
         md:w-[20%] sm:w-[40%] rounded-md overflow-hidden"
       >
         <Link href={`/product/${product._id}`} scroll={false} passHref>
-          {image ? (
-            <img
-              // src={image}
-              src={image}
-              loading="lazy"
-              className="w-full cursor-pointer hover:opacity-30 
-              hover:scale-125 transition-all"
-            />
-          ) : (
-            <Skeleton
-              // circle
-              width="100%"
-              height={200}
-              containerClassName="avatar-skeleton"
-            />
-          )}
+          <img
+            // src={image}
+            src={
+              process.env.NEXT_PUBLIC_SERVER +
+              "/product/" +
+              product._id +
+              "/images/" +
+              "1"
+            }
+            loading="lazy"
+            className="w-full cursor-pointer hover:opacity-30 
+            hover:scale-125 transition-all"
+          />
+          {/* {image ? (
+          ) 
+           : (
+             <Skeleton
+               // circle
+               width="100%"
+               height={200}
+               containerClassName="avatar-skeleton"
+             />
+           )
+           } */}
         </Link>
         <div className="p-4 cursor-pointer">
           <Link href={`/product/${product._id}`} scroll={false} passHref>

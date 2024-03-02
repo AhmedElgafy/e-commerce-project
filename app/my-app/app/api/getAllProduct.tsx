@@ -1,10 +1,13 @@
 import * as dotenv from "dotenv";
+
 export async function getAllProduct() {
   const res = await fetch(process.env.SERVER || "");
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
+  // const data = await ;
+  console.log("data");
+  // if (!res.ok) {
+  //   console.log(process.env.SERVER);
+  //   throw new Error("Failed to fetch data");
+  // }
 
   return res.json();
 }
