@@ -68,4 +68,4 @@ const Body: React.FC<PropsTyp> = ({ allProducts }) => {
   );
 };
 
-export default memo(Body);
+export default Body;

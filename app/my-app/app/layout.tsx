@@ -26,7 +26,6 @@ export default function RootLayout({
       >
         <ReduxProvider>
           <Header />
-          {/* <SideNav /> */}
           {children}
           <Cart />
         </ReduxProvider>

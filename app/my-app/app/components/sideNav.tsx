@@ -53,6 +53,7 @@ const SideNav = () => {
           {catagories.map((ele, index) => {
             return (
               <Link
+                key={index}
                 href="/"
                 className="
               w-[45%] 
