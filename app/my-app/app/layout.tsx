@@ -4,6 +4,7 @@ import "./globals.css";
 import { ReduxProvider } from "./store/provider";
 import Header from "./components/header";
 import Cart from "./components/cart";
+import SideNav from "./components/sideNav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,14 +19,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={"bg-[#001b4a] relative pb-[5rem] text-white"}
         suppressHydrationWarning={true}
       >
         <ReduxProvider>
           <Header />
-
           {children}
           <Cart />
         </ReduxProvider>

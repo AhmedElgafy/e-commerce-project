@@ -1,12 +1,17 @@
-import * as dotenv from "dotenv";
 export async function getAllProduct() {
-  const res = await fetch(process.env.SERVER || "");
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
+  try {
+    console.log(process.env.SERVER);
+    const res = await fetch(process.env.SERVER + "/allcardsitems" || "");
+    if (res.ok) {
+      const body = await res.json();
+      // console.log(body);
+      return body;
+    }
+  } catch (err) {
+    console.log("************** Get all product problem ************");
+    console.error(err);
+    return 0;
   }
-
-  return res.json();
 }
 
 export async function getProductById(id: string) {

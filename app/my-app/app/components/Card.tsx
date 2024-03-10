@@ -4,25 +4,22 @@ import Link from "next/link";
 import { getProductOneImageById } from "../api/getAllProduct";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
+import "react-loading-skeleton/dist/skeleton.css";
+
 import {
   CartProduct,
   addToTheCart,
   removeFromCartById,
 } from "../store/reducers/shoppingCart";
+import CardImage from "./CardImage";
 
 interface ProductCardProps {
   product: ProductType;
 }
 
 const ProductCard = async ({ product }: ProductCardProps) => {
-  const [image, setImage] = useState("");
   const [selected, setSelected] = useState<boolean>(false);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    getProductOneImageById(product._id, "1").then((data) => setImage(data));
-  }, [product]);
   const x: CartProduct = {
     count: 0,
     _id: product._id,
@@ -42,21 +39,19 @@ const ProductCard = async ({ product }: ProductCardProps) => {
   return (
     <>
       <div
-        className="bg-[#008abb] shadow-md w-[80%]
+        className="bg-[#008abb] shadow-md w-[80%] 
         md:w-[20%] sm:w-[40%] rounded-md overflow-hidden"
+        key={product._id}
       >
         <Link href={`/product/${product._id}`} scroll={false} passHref>
-          <img
-            src={image}
-            loading="lazy"
-            className="w-full cursor-pointer hover:opacity-30 hover:scale-125 transition-all"
-          />
+          <CardImage id={product._id} />
         </Link>
         <div className="p-4 cursor-pointer">
           <Link href={`/product/${product._id}`} scroll={false} passHref>
             <h2
               className="text-xl truncate text-[#d4e7eb]
             cursor-pointer font-semibold mb-2"
+              title={product.name || ""}
             >
               {product.name}
             </h2>

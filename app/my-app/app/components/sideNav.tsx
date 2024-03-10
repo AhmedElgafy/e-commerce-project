@@ -6,6 +6,7 @@ import { decrement, increment } from "../store/reducers/counterSlice";
 import { setCategory } from "../store/reducers/category";
 import { setToggleMeno } from "../store/reducers/togglemeno";
 import { setSearch } from "../store/reducers/search";
+import Link from "next/link";
 
 const SideNav = () => {
   const catagories: { name: string; imageSrc: string }[] = [
@@ -20,9 +21,6 @@ const SideNav = () => {
     { name: "Fan", imageSrc: "../../fan.png" },
     { name: "All", imageSrc: "../../all.svg" },
   ];
-  const count = useSelector((state: RootState) => state.counter.value);
-  const category = useSelector((state: RootState) => state.category.value);
-  const search = useSelector((state: RootState) => state.search.value);
   const toggleMeno = useSelector((state: RootState) => state.toggleMeno.value);
   const dispatch = useDispatch();
   const handelCategoryClick = (catName: string) => {
@@ -40,14 +38,18 @@ const SideNav = () => {
   return (
     <>
       <div
-        className={`border-2 md:h-screen transition-all w-[100%] items-center ${
-          !toggleMeno && "hidden"
-        }   md:w-[20%] md:block`}
+        className={`border-opacity-25 border-white border-x-2 border-b-2
+       overflow-hidden md:h-screen delay-100 w-[100%] items-center ${
+         !toggleMeno ? "  h-0" : "h-80"
+       }   md:w-[20%] transition-all overflow-x-hidden overflow-scroll `}
       >
-        <ul className="px-2 py-2 flex flex-wrap justify-center md:flex-nowrap md:flex-col">
+        <ul
+          className="px-2 py-2 flex flex-wrap 
+        justify-center md:flex-nowrap md:flex-col"
+        >
           {catagories.map((ele, index) => {
             return (
-              <li
+              <div
                 key={index}
                 className="flex transition-all 
                  hover:translate-x-4 gap-2
@@ -58,21 +60,28 @@ const SideNav = () => {
                   handelCategoryClick(ele.name);
                 }}
               >
-                <img
-                  src={ele.imageSrc}
-                  className="w-8 bg-white rounded-md"
-                  alt={ele.name}
-                />
-                <p className="my-auto">{ele.name}</p>
-              </li>
+                <li
+                  key={index}
+                  className="flex transition-all 
+                   hover:translate-x-4 gap-1
+                  p-3 w-[100%] cursor-pointer
+                  hover:filter hover:invert
+                   hover:text-black "
+                  onClick={(e) => {
+                    handelCategoryClick(ele.name);
+                  }}
+                >
+                  <img
+                    src={ele.imageSrc}
+                    className="w-8 bg-white rounded-md"
+                    alt={ele.name}
+                  />
+                  <p className="my-auto">{ele.name}</p>
+                </li>
+              </div>
             );
           })}
         </ul>
-        {/* <h1>{count}</h1>
-        <button onClick={() => handelCategoryClick}>+</button>
-        <button onClick={() => dispatch(decrement())}>-</button> */}
-        {/* <h1>cur Category: {category}</h1>
-        <h1>cur search: {search}</h1> */}
       </div>
     </>
   );

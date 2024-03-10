@@ -6,6 +6,7 @@ import { setSearch } from "../store/reducers/search";
 import { setToggleMeno } from "../store/reducers/togglemeno";
 import Link from "next/link";
 import { setShowCart } from "../store/reducers/showCart";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
   const search = useSelector((state: RootState) => state.search.value);
@@ -13,6 +14,8 @@ const Header = () => {
   const cart = useSelector((state: RootState) => state.shoppingCart.value);
   const showCart = useSelector((state: RootState) => state.showCart.value);
   const dispatch = useDispatch();
+  const pathname = usePathname();
+
   const handelSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearch(e.target.value));
   };
@@ -21,16 +24,21 @@ const Header = () => {
   };
   return (
     <>
-      <div className=" bg-[#034579] shadow-lg col-span-7 flex relative flex-wrap px-5 ">
+      <div className=" sticky bg-[#034579] shadow-lg col-span-7 justify-between flex  flex-wrap px-5 ">
         {/* Logo */}
         <div className="flex items-center hover:filter transition-all hover:invert flex-none w-[60px] ">
-          <Link href={process.env.NEXT_PUBLIC_HOST || ""}>
+          {/* <Link href={process.env.NEXT_PUBLIC_HOST || ""}> */}
+          <Link href={"/"}>
             <img src="../../Logo.png" className="block " alt="logo Image" />
           </Link>
         </div>
         {/* <h1 className="my-auto text-lg font-bold">Abo mohamed LL computer</h1> */}
         {/* search bar */}
-        <div className="  p-2 grow w-[50%] md:grow-0 flex items-center mx-auto relative">
+        <div
+          className={` ${
+            pathname != "/" && "hidden"
+          } p-2 grow w-[50%] md:grow-0 flex items-center mx-auto relative`}
+        >
           <input
             onChange={handelSearch}
             type="text"
