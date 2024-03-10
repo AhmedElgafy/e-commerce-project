@@ -49,7 +49,8 @@ const SideNav = () => {
             return (
               <li
                 key={index}
-                className="flex transition-all  hover:translate-x-4 gap-2
+                className="flex transition-all 
+                 hover:translate-x-4 gap-2
                  p-3 w-[45%] cursor-pointer
                  hover:filter hover:invert
                   hover:text-black "
