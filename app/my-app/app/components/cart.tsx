@@ -1,29 +1,26 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import {
   CartProduct,
   removeFromCartById,
 } from "../store/reducers/shoppingCart";
-import { getProductOneImageById } from "../api/getAllProduct";
 import { setShowCart } from "../store/reducers/showCart";
-import ProductCard from "./Card";
+import CardImage from "./CardImage";
+import Link from "next/link";
+import removeEGP from "./removerEGP";
 interface CartItemsProps {
   productCart: CartProduct;
 }
 const CartItem = ({ productCart }: CartItemsProps) => {
-  const [image, setImage] = useState("");
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    getProductOneImageById(productCart._id, "1").then((data) => setImage(data));
-  }, [productCart]);
+  console.log(productCart._id);
   return (
     <>
-      <div className="flex gap-2 justify-between" key={productCart._id}>
-        <div className="w-[30%] ">
-          <img src={image} className="" alt="" />
+      <div className="flex gap-2  justify-between" key={productCart._id}>
+        <div className="w-[30%] h-[4rem]">
+          <CardImage id={productCart._id} />
         </div>
         <div className="w-[60%] relative">
           <h1
@@ -32,7 +29,10 @@ const CartItem = ({ productCart }: CartItemsProps) => {
           >
             {productCart.name}
           </h1>
-          <h1 className="absolute bottom-0 right-0"> {productCart.price}</h1>
+          <h1 className="absolute bottom-0 right-0">
+            {removeEGP(productCart.price || "0") * Number(productCart.count) +
+              " EGP"}
+          </h1>
           <img
             src="../../delete.svg"
             className="absolute cursor-pointer bottom-0 w-[15%]"
@@ -44,15 +44,9 @@ const CartItem = ({ productCart }: CartItemsProps) => {
     </>
   );
 };
-function removeEGP(text: string) {
-  // Use the replace function to replace "EGP" with an empty string
-  const textWithoutEGP = text.replace(/EGP/gi, ""); // 'gi' flag makes it case-insensitive
 
-  return Number(textWithoutEGP);
-}
 const Cart = () => {
   const cartItems = useSelector((state: RootState) => state.shoppingCart.value);
-  // const [hidCart, setHidCart] = useState<boolean>(false);
   const showCart = useSelector((state: RootState) => state.showCart.value);
   const dispatch = useDispatch();
   let total = 0;
@@ -60,8 +54,9 @@ const Cart = () => {
     <div
       className={`${
         !showCart && "opacity-0 right-[-100%]"
-      } transition-all ease-in-out duration-500 z-30 fixed flex gap-3 p-4 flex-col top-0 scrollable-div
-      overflow-scroll right-0 h-screen md:w-[20%] w-[50%] bg-green-800`}
+      } transition-all ease-in-out duration-500 fixed 
+      flex gap-3 p-4 flex-col top-0 scrollable-div
+      overflow-scroll right-0 z-50 h-screen md:w-[20%] w-[50%] bg-green-800`}
     >
       <div className="flex justify-end">
         <img
@@ -76,9 +71,13 @@ const Cart = () => {
         />
       </div>
       {cartItems.length
-        ? cartItems.map((ele) => {
+        ? cartItems.map((ele, index) => {
             total = total + removeEGP(ele.price || "");
-            return <CartItem productCart={ele} />;
+            return (
+              <div key={index}>
+                <CartItem productCart={ele} />;
+              </div>
+            );
           })
         : ""}
       {cartItems.length ? (
@@ -91,6 +90,16 @@ const Cart = () => {
               <span> EGP</span>
             </h1>
           </div>
+          <Link href={"/cart"}>
+            <div
+              className="mx-auto bg-green-500 w-40 h-10 flex items-center 
+          justify-center rounded-lg cursor-pointer transition-colors
+           duration-200 hover:text-black
+          hover:bg-green-100"
+            >
+              Cart page
+            </div>
+          </Link>
         </>
       ) : (
         <div>

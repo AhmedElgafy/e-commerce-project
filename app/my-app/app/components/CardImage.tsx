@@ -25,7 +25,7 @@ const CardImage = ({ id }: ImageProps) => {
               hover:scale-125 transition-all"
         />
       ) : (
-        <div className=" relative h-[180px] w-full bg-slate-400">
+        <div className=" relative h-full w-full bg-slate-400">
           <div
             className="absolute bg-black w-[100%] h-[50%] 
           translate-y-[50%] blur-lg animate-pulse"

@@ -21,7 +21,7 @@ const ProductCard = async ({ product }: ProductCardProps) => {
   const [selected, setSelected] = useState<boolean>(false);
   const dispatch = useDispatch();
   const x: CartProduct = {
-    count: 0,
+    count: 1,
     _id: product._id,
     name: product.name,
     price: product.price,
@@ -44,7 +44,9 @@ const ProductCard = async ({ product }: ProductCardProps) => {
         key={product._id}
       >
         <Link href={`/product/${product._id}`} scroll={false} passHref>
-          <CardImage id={product._id} />
+          <div className="h-[200px] overflow-hidden">
+            <CardImage id={product._id} />
+          </div>
         </Link>
         <div className="p-4 cursor-pointer">
           <Link href={`/product/${product._id}`} scroll={false} passHref>

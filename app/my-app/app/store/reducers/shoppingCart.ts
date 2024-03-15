@@ -27,7 +27,21 @@ const productSlice = createSlice({
     removeFromCartById: (state, action: PayloadAction<string>) => {
       state.value = state.value.filter((ele) => ele._id != action.payload);
     },
+    updateCountOfCartById: (
+      state,
+      action: PayloadAction<{ id: string; count2: number }>
+    ) => {
+      const newOne = state.value.filter((ele) => {
+        if (ele._id == action.payload.id) {
+          ele.count = action.payload.count2;
+        }
+        return ele;
+      });
+      state.value = newOne;
+      // return(...state,)
+    },
   },
 });
-export const { addToTheCart, removeFromCartById } = productSlice.actions;
+export const { addToTheCart, removeFromCartById, updateCountOfCartById } =
+  productSlice.actions;
 export default productSlice.reducer;

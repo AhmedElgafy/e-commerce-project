@@ -1,6 +1,6 @@
 export async function getAllProduct() {
   try {
-    console.log(process.env.SERVER);
+    // console.log(process.env.SERVER);
     const res = await fetch(process.env.SERVER + "/allcardsitems" || "");
     if (res.ok) {
       const body = await res.json();

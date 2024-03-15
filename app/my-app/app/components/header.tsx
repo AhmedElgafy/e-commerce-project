@@ -24,7 +24,10 @@ const Header = () => {
   };
   return (
     <>
-      <div className=" sticky bg-[#034579] shadow-lg col-span-7 justify-between flex  flex-wrap px-5 ">
+      <div
+        className=" sticky top-0 z-50 bg-[#034579] shadow-lg
+       col-span-7 justify-between flex   flex-wrap px-5 "
+      >
         {/* Logo */}
         <div className="flex items-center hover:filter transition-all hover:invert flex-none w-[60px] ">
           {/* <Link href={process.env.NEXT_PUBLIC_HOST || ""}> */}
